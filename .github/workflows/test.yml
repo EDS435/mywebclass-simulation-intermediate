@@ -24,11 +24,10 @@ jobs:
         run: npx playwright test tests/lighthouse.test.js
       - name: Install jq
         run: sudo apt-get install jq
-      - name: Archive Lighthouse report
+      - name: Archive Lighthouse report, videos, and screenshots
         uses: actions/upload-artifact@v2
         with:
-          name: lighthouse-report
-          path: lighthouse-report.json
-      - name: Upload Lighthouse report to GitHub Actions
-        run: |
-          gh pr create --title "Lighthouse Report" --body "$(cat lighthouse-report.json | jq -r '. | @json')" || true
+          name: test-artifacts
+          path: |
+            lighthouse-report.json
+            test-results/
