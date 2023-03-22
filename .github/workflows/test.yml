@@ -24,8 +24,6 @@ jobs:
         uses: GabrielBB/xvfb-action@v1
         with:
           run: npx playwright test
-      - name: Run Lighthouse tests
-        run: npx playwright test tests/lighthouse.test.js
       - name: Install jq
         run: sudo apt-get install jq
       - name: Archive Lighthouse report, videos, and screenshots
