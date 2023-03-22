@@ -39,7 +39,15 @@ module.exports = defineConfig({
     // baseURL: 'http://localhost:3000',
       video: 'on', screenshot: 'on',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry'
+    trace: 'on-first-retry',
+    afterEach: async ({ testInfo }, use) => {
+      if (testInfo.status === 'failed') {
+        const screenshotPath = `${testInfo.outputDir}/failure-${testInfo.title.replace(/\s+/g, '_')}.png`;
+        await testInfo.attachments[0].artifact.saveAs(screenshotPath);
+      }
+      await use();
+    },
+  },
   },
 
   /* Configure projects for major browsers */
@@ -48,6 +56,7 @@ module.exports = defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'], headless: true }
     },
+    
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'], headless: true }
@@ -74,6 +83,7 @@ module.exports = defineConfig({
     //   name: 'Google Chrome',
     //   use: { channel: 'chrome' },
     // },
+    
   ],
 
   
