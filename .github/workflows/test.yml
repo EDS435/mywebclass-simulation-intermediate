@@ -23,7 +23,7 @@ on:
         uses: GabrielBB/xvfb-action@v1
         with:
           run: npx playwright test
-S
+
       - name: Run Lighthouse tests
         run: npx playwright test tests/lighthouse.test.js
       - name: Install jq
