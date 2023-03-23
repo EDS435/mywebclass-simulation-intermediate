@@ -46,8 +46,8 @@ module.exports = defineConfig({
         await testInfo.attachments[0].artifact.saveAs(screenshotPath);
       }
       await use();
-    },
-  },
+    }
+
   },
 
   /* Configure projects for major browsers */
@@ -56,7 +56,6 @@ module.exports = defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'], headless: true }
     },
-    
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'], headless: true }
