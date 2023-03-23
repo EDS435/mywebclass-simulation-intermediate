@@ -13,13 +13,13 @@ const { defineConfig, devices } = require('@playwright/test')
 module.exports = defineConfig({
   testDir: './tests',
   /* Maximum time one test can run for. */
-  timeout: 30 * 1000,
+  timeout: 60 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000
+    timeout: 6000
   },
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -37,19 +37,34 @@ module.exports = defineConfig({
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
-
+      video: 'on', screenshot: 'on',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry'
+    trace: 'on-first-retry',
+    afterEach: async ({ testInfo }, use) => {
+      if (testInfo.status === 'failed') {
+        const screenshotPath = `${testInfo.outputDir}/failure-${testInfo.title.replace(/\s+/g, '_')}.png`;
+        await testInfo.attachments[0].artifact.saveAs(screenshotPath);
+      }
+      await use();
+    }
+
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
-    }
-
-    /* Test against mobile viewports. */
+      use: { ...devices['Desktop Chrome'], headless: true }
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'], headless: true }
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'], headless: true }
+    } ,
+    
     // {
     //   name: 'Mobile Chrome',
     //   use: { ...devices['Pixel 5'] },
@@ -64,14 +79,15 @@ module.exports = defineConfig({
     //   name: 'Microsoft Edge',
     //   use: { channel: 'msedge' },
     // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { channel: 'chrome' },
-    // },
+    {
+    name: 'Google Chrome',
+    use: { channel: 'chrome',headless: true },
+   },
+    
   ],
 
-  /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  // outputDir: 'test-results/',
+  
+  outputDir: 'test-results/',
 
   /* Run your local dev server before starting the tests */
   webServer: {
