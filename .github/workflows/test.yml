@@ -1,4 +1,4 @@
-name: Build and Test Docker Image
+name: Build and Run Lighthouse tests
 
 on:
   push:
