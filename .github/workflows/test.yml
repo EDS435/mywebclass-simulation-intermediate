@@ -25,9 +25,13 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install
 
-      - name: Run tests
-        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x1024x24' npx playwright test
+      - name: Setup XVFB
+        run: sudo apt-get install -y xvfb
 
+      - name: Run tests
+        env:
+          PLAYWRIGHT_CLI_EXIT_ON_FIRST_FAILURE: '1'
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x1024x24' npx playwright test
       - name: Install jq
         run: sudo apt-get install jq
 
@@ -38,3 +42,12 @@ jobs:
           path: |
             lighthouse-report.json
             test-results/
+            **/*.mp4
+            **/*.png
+
+      - name: Generate Playwright report
+        uses: andresz1/playwright-report@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          files: '**/*.mp4'
+          browser_name: chromium

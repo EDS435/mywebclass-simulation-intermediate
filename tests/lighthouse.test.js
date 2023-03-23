@@ -18,7 +18,7 @@ test('Lighthouse audit home page', async ({ page }) => {
   const lhr = JSON.parse(readFileSync(reportPath));
 
   const performanceScore = lhr.categories.performance.score * 100;
-  expect(performanceScore).toBeGreaterThanOrEqual(60);
+  expect(performanceScore).toBeGreaterThanOrEqual(8S0);
 });
 
 
@@ -57,7 +57,7 @@ test('Lighthouse audit home page for accessibility', async ({ page }) => {
     const lhr = JSON.parse(readFileSync(reportPath));
   
     const accessibilityScore = lhr.categories.accessibility.score * 100;
-    expect(accessibilityScore).toBeGreaterThanOrEqual(80);
+    expect(accessibilityScore).toBeGreaterThanOrEqual(90);
   });
 
 
@@ -77,7 +77,7 @@ test('Lighthouse audit content page', async ({ page }) => {
     const lhr = JSON.parse(readFileSync(reportPath));
   
     const performanceScore = lhr.categories.performance.score * 100;
-    expect(performanceScore).toBeGreaterThanOrEqual(70);
+    expect(performanceScore).toBeGreaterThanOrEqual(90);
   });
 
 
