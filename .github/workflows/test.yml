@@ -22,6 +22,9 @@ jobs:
       - name: Setup Playwright
         uses: microsoft/playwright-github-action@v1
 
+      - name: Install Playwright browsers
+        run: npx playwright install
+
       - name: Run tests
         run: npx playwright test
 
