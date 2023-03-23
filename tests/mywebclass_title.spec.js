@@ -66,31 +66,72 @@ test('Privacy Modal Test', async ({ page }) => {
 });
 
 
-
-test('homePage has correct meta properties', async ({ page }) => {
+test('homePage has a "keywords" meta tag with the expected value', async ({ page }) => {
   await page.goto('http://localhost:3000');
   await page.waitForLoadState('networkidle');
 
-  const metaTags = await page.$$eval('head > meta', (tags) =>
-    tags.map((tag) => ({
-      name: tag.getAttribute('name') || tag.getAttribute('property'),
-      content: tag.getAttribute('content'),
-    }))
-  );
+  const expectedValue = 'My Webclass Homepage';
+  const tag = await page.$('head > meta[name="keywords"]');
+  expect(tag).toBeDefined();
+  expect(await tag.getAttribute('content')).toEqual(expectedValue);
+});
 
-  const expectedMetaTags = {
-    keywords: 'My Webclass Homepage',
-    author: 'Keith Williams',
-    description: 'A project to help educators integrate new technoliges into their teaching',
-    'og:title': 'MyWebClass.org',
-    'og:description': 'A project to help educators integrate new technoliges into their teaching',
-    'og:image': 'assets/images/logo.png',
-    'og:url': '',
-  };
+test('homePage has an "author" meta tag with the expected value', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+  await page.waitForLoadState('networkidle');
 
-  metaTags.forEach((tag) => {
-    const expectedValue = expectedMetaTags[tag.name];
-    expect(expectedValue).toBeDefined();
-    expect(tag.content).toEqual(expectedValue);
-  });
+  const expectedValue = 'Keith Williams';
+  const tag = await page.$('head > meta[name="author"]');
+  expect(tag).toBeDefined();
+  expect(await tag.getAttribute('content')).toEqual(expectedValue);
+});
+
+test('homePage has a "description" meta tag with the expected value', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+  await page.waitForLoadState('networkidle');
+
+  const expectedValue = 'A project to help educators integrate new technoliges into their teaching';
+  const tag = await page.$('head > meta[name="description"]');
+  expect(tag).toBeDefined();
+  expect(await tag.getAttribute('content')).toEqual(expectedValue);
+});
+
+test('homePage has an "og:title" meta tag with the expected value', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+  await page.waitForLoadState('networkidle');
+
+  const expectedValue = 'MyWebClass.org';
+  const tag = await page.$('head > meta[property="og:title"]');
+  expect(tag).toBeDefined();
+  expect(await tag.getAttribute('content')).toEqual(expectedValue);
+});
+
+test('homePage has an "og:description" meta tag with the expected value', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+  await page.waitForLoadState('networkidle');
+
+  const expectedValue = 'A project to help educators integrate new technoliges into their teaching';
+  const tag = await page.$('head > meta[property="og:description"]');
+  expect(tag).toBeDefined();
+  expect(await tag.getAttribute('content')).toEqual(expectedValue);
+});
+
+test('homePage has an "og:image" meta tag with the expected value', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+  await page.waitForLoadState('networkidle');
+
+  const expectedValue = 'assets/images/logo.png';
+  const tag = await page.$('head > meta[property="og:image"]');
+  expect(tag).toBeDefined();
+  expect(await tag.getAttribute('content')).toEqual(expectedValue);
+});
+
+test('homePage has an "og:url" meta tag with the expected value', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+  await page.waitForLoadState('networkidle');
+
+  const expectedValue = '';
+  const tag = await page.$('head > meta[property="og:url"]');
+  expect(tag).toBeDefined();
+  expect(await tag.getAttribute('content')).toEqual(expectedValue);
 });
