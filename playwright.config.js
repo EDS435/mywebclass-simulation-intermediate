@@ -63,7 +63,8 @@ module.exports = defineConfig({
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'], headless: true }
-    }
+    } ,
+    
     // {
     //   name: 'Mobile Chrome',
     //   use: { ...devices['Pixel 5'] },
@@ -78,10 +79,10 @@ module.exports = defineConfig({
     //   name: 'Microsoft Edge',
     //   use: { channel: 'msedge' },
     // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { channel: 'chrome' },
-    // },
+    {
+    name: 'Google Chrome',
+    use: { channel: 'chrome',headless: true },
+   },
     
   ],
 

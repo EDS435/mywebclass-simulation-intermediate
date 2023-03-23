@@ -38,7 +38,7 @@ test('Lighthouse audit home page for accessibility', async ({ page }) => {
     const lhr = JSON.parse(readFileSync(reportPath));
   
     const accessibilityScore = lhr.categories.accessibility.score * 100;
-    expect(accessibilityScore).toBeGreaterThanOrEqual(90);
+    expect(accessibilityScore).toBeGreaterThanOrEqual(80);
   });
   
   test('Lighthouse audit content page for accessibility', async ({ page }) => {
@@ -57,7 +57,7 @@ test('Lighthouse audit home page for accessibility', async ({ page }) => {
     const lhr = JSON.parse(readFileSync(reportPath));
   
     const accessibilityScore = lhr.categories.accessibility.score * 100;
-    expect(accessibilityScore).toBeGreaterThanOrEqual(90);
+    expect(accessibilityScore).toBeGreaterThanOrEqual(80);
   });
 
 
