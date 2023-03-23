@@ -13,19 +13,19 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
         languages: javascript, html
 
     - name: Build CodeQL Database
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
       with:
         query: security-extended.ql
         languages: javascript, html
         database: codeql_database
 
     - name: Run CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
       with:
         query: security-extended.ql
         languages: javascript, html
