@@ -18,7 +18,7 @@ test('Lighthouse audit home page', async ({ page }) => {
   const lhr = JSON.parse(readFileSync(reportPath));
 
   const performanceScore = lhr.categories.performance.score * 100;
-  expect(performanceScore).toBeGreaterThanOrEqual(8S0);
+  expect(performanceScore).toBeGreaterThanOrEqual(85);
 });
 
 
