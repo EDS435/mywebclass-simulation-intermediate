@@ -26,7 +26,7 @@ jobs:
         run: npx playwright install
 
       - name: Run tests
-        run: npx playwright test
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x1024x24' npx playwright test
 
       - name: Install jq
         run: sudo apt-get install jq
