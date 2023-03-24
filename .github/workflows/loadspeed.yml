@@ -1,46 +1,36 @@
-name: Build and Test Docker Image
+name:  Run loadspeed playwright tests
 
 on:
   push:
   pull_request:
 
 jobs:
-  build-and-test:
+  build-test-loadspeed:
     runs-on: ubuntu-latest
-    env:
-      tests_failed: ''
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
           node-version: '18.x'
-
       - name: Install dependencies
         run: npm ci
-
-      - name: Setup Playwright
-        uses: microsoft/playwright-github-action@v1
-
-      - name: Install Playwright browsers
-        run: npx playwright install
-
-      - name: Setup XVFB
-        run: sudo apt-get install -y xvfb
-
+      - name: Install playwright browsers
+        run: npx playwright install --with-deps
       - name: Run tests
         env:
           PLAYWRIGHT_CLI_EXIT_ON_FIRST_FAILURE: '1'
-        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x1024x24' npx playwright test tests/lighthouse.test.js || echo "tests_failed=true" >> $GITHUB_ENV
+        run: npx playwright test tests/loadSpeed.spec.js --config=playwright.config.js || echo "tests_failed=true" >> $GITHUB_ENV
 
       - name: Print tests_failed
         run: echo "tests_failed=$tests_failed"
+  
 
       - name: Install jq
         run: sudo apt-get install jq
 
+     
       - name: Archive Lighthouse report, videos, and screenshots
         if: env.tests_failed == 'true'
         uses: actions/upload-artifact@v2
@@ -51,8 +41,8 @@ jobs:
             test-results/
             **/*.mp4
             **/*.png
-
       - name: Exit with failure if tests failed
         if: env.tests_failed == 'true'
         run: exit 1
 
+   

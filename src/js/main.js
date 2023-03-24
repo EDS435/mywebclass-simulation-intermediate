@@ -21,7 +21,7 @@ window.addEventListener('resize', () => {
   }, 250)
 })
 
-function createPrivacyModal () {
+ function createPrivacyModal () {
   const modalHtml = `
     <div class="modal fade" id="privacyModal" tabindex="-1">
       <div class="modal-dialog">
@@ -46,6 +46,7 @@ function createPrivacyModal () {
   // Append the modal HTML to the body of the document
   document.body.insertAdjacentHTML('beforeend', modalHtml)
 }
+
 
 function initializePrivacyModal () {
   const privacyModal = new Modal(document.getElementById('privacyModal'))
