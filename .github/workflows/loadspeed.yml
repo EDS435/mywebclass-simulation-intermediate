@@ -1,11 +1,11 @@
-name:  Run Responsive playwright tests
+name:  Run loadspeed playwright tests
 
 on:
   push:
   pull_request:
 
 jobs:
-  build-test-metatags:
+  build-test-loadspeed:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
