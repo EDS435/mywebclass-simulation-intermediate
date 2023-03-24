@@ -1,4 +1,4 @@
-name: Build and Run Lighthouse tests
+name: Build and Test Docker Image
 
 on:
   push:
@@ -7,6 +7,8 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      tests_failed: ''
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -31,14 +33,16 @@ jobs:
       - name: Run tests
         env:
           PLAYWRIGHT_CLI_EXIT_ON_FIRST_FAILURE: '1'
-        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x1024x24'  npx playwright test tests/lighthouse.test.js || exit 0
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x1024x24' npx playwright test tests/lighthouse.test.js || echo "tests_failed=true" >> $GITHUB_ENV
 
-  
+      - name: Print tests_failed
+        run: echo "tests_failed=$tests_failed"
 
       - name: Install jq
         run: sudo apt-get install jq
 
       - name: Archive Lighthouse report, videos, and screenshots
+        if: env.tests_failed == 'true'
         uses: actions/upload-artifact@v2
         with:
           name: test-artifacts
@@ -47,5 +51,6 @@ jobs:
             test-results/
             **/*.mp4
             **/*.png
-
-   
+      - name: Exit with failure if tests failed
+        if: env.tests_failed == 'true'
+        run: exit 1

@@ -1,11 +1,11 @@
-name:  Run Responsive playwright tests
+name:  Run privacy modal playwright tests
 
 on:
   push:
   pull_request:
 
 jobs:
-  build-test-metatags:
+  build-test-privacymodal:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,7 +21,7 @@ jobs:
       - name: Run tests
         env:
           PLAYWRIGHT_CLI_EXIT_ON_FIRST_FAILURE: '1'
-        run: npx playwright test tests/responsive.spec.js --config=playwright.config.js || echo "tests_failed=true" >> $GITHUB_ENV
+        run: npx playwright test tests/privacyModal.spec.js --config=playwright.config.js || echo "tests_failed=true" >> $GITHUB_ENV
 
       - name: Print tests_failed
         run: echo "tests_failed=$tests_failed"
@@ -44,5 +44,3 @@ jobs:
       - name: Exit with failure if tests failed
         if: env.tests_failed == 'true'
         run: exit 1
-
-   
