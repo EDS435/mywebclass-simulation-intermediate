@@ -51,6 +51,8 @@ jobs:
             test-results/
             **/*.mp4
             **/*.png
+
       - name: Exit with failure if tests failed
         if: env.tests_failed == 'true'
         run: exit 1
+
