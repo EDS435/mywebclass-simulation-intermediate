@@ -1,4 +1,4 @@
-name: Build and Test Docker Image
+name: Lighthouse SEO test
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
       - name: Run tests
         env:
           PLAYWRIGHT_CLI_EXIT_ON_FIRST_FAILURE: '1'
-        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x1024x24' npx playwright test tests/lighthouse.test.js || echo "tests_failed=true" >> $GITHUB_ENV
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x1024x24' npx playwright test tests/lighthouseSEO.test.js || echo "tests_failed=true" >> $GITHUB_ENV
 
       - name: Print tests_failed
         run: echo "tests_failed=$tests_failed"
