@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import React, { useState } from 'react';
-import Header from '../components/header';
-//import Header from '../components/tailwind-css/header';
-import MainContent from '../components/mainContent';
-//import MainContent from '../components/tailwind-css/mainContent';
-import Footer from '../components/footer';
-//import Footer from '../components/tailwind-css/footer';
+//import Header from '../components/header';
+import Header from '../components/tailwind-css/header';
+//import MainContent from '../components/mainContent';
+import MainContent from '../components/tailwind-css/mainContent';
+//import Footer from '../components/footer';
+import Footer from '../components/tailwind-css/footer';
 
 export default function Home() {
   const [analyticsConsent, setAnalyticsConsent] = useState('unknown');
